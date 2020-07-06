@@ -12,6 +12,7 @@ std::string validTag(std::string s, std::string &x){
                 tag+="/";
                 return tag;
             }
+            if(s[i]=='>')return tag;
         }
         else tag+=s[i];
     }
