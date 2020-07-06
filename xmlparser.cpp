@@ -137,6 +137,7 @@ int main(){
             string last=lasttag(searchtag);
             int lastind=lastindex(searchtag);
             int indexofquery=updatequery(tmpdata, alltagsname, searchtag);
+            cout<<tmpdata<<endl;
             vector<string>final;
             getData(tmpdata,last,final);
             stripTags(final[lastind]);
@@ -166,15 +167,13 @@ int main(){
             string newtagname="";
             string newtagvalue="";
             separatetags(searchtag, newtagname, newtagvalue, tasktag);
-
             string tmpdata=xmldata;
             string last=lasttag(searchtag);
             int lastind=lastindex(searchtag);
-            int ii=updatequery(tmpdata, alltagsname, searchtag);
+            int ii=insertquery(tmpdata, alltagsname, searchtag);
             vector<string>final;
             getData(tmpdata,last,final);
             string tagleftout=final[lastind];
-
             string subdata=xmldata.substr(ii);
             string updatedstring="";
             for(int i=0;i<ii;i++)updatedstring+=xmldata[i];
