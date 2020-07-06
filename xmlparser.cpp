@@ -137,7 +137,7 @@ int main(){
             string last=lasttag(searchtag);
             int lastind=lastindex(searchtag);
             int indexofquery=updatequery(tmpdata, alltagsname, searchtag);
-            cout<<tmpdata<<endl;
+            //cout<<tmpdata<<endl;
             vector<string>final;
             getData(tmpdata,last,final);
             stripTags(final[lastind]);
