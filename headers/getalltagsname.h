@@ -12,32 +12,34 @@ std::vector<std::string> getalltagsname(std::string &s){
         if(s[i]=='<'){
             i++;
             if(s[i]=='/'){
+                while(i<s.length() && s[i]!='>')i++;
                 i++;
-                while(i<s.length() && s[i]!='>'){
+            }
+            else{
+                while(i<s.length() && s[i]!=' ' && s[i]!='/' && s[i]!='>'){
                     tagn+=s[i];
                     i++;
                 }
                 if(s[i]=='>'){
-                    tagn="";
-                    i++;
-                }
-            }
-            else{
-                while(i<s.length() && (s[i]!=' '&& s[i]!='/' && s[i]!='>')){
-                    tagn+=s[i];
-                    i++;
-                }
-                if((s[i]=='/' && s[i+1]=='>') || s[i]=='>'){
                     if(alltags.find(tagn)==alltags.end()){alltags.insert(tagn);tagsvector.push_back(tagn);}
                     tagn="";
                     i++;
                 }
+                else if(s[i]=='/' && s[i+1]=='>'){
+                    if(alltags.find(tagn)==alltags.end()){alltags.insert(tagn);tagsvector.push_back(tagn);}
+                    tagn="";
+                    i+=2;
+                }
+                else if(s[i]==' '){
+                    if(alltags.find(tagn)==alltags.end()){alltags.insert(tagn);tagsvector.push_back(tagn);}
+                    tagn="";
+                    while(i<s.length() && s[i]!='/')i++;
+                    i+=2;
+                }
             }
         }
         else{
-            while(i<s.length() && s[i]!='<'){
-                i++;
-            }
+            while(i<s.length() && s[i]!='<')i++;
         }
     }
     return tagsvector;
