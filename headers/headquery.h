@@ -118,7 +118,6 @@ int updatequery(std::string &s, std::vector<std::string> &alltags, std::string &
             v.clear();
         }
     }
-    s=v[x];
     for(int i=vt.size()-1;i>=0;i--){
         for(int j=2;j<vt[i].size();j++){
             if((j-2)<stoi(vt[i][0])){
