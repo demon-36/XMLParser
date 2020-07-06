@@ -152,10 +152,11 @@ int main(){
                subsubdata.erase(f,orgvalue.length());
                subsubdata.insert(f,updatetag);
                updatedstring+=subsubdata;
-               cout<<updatedstring<<endl;
+               //cout<<updatedstring<<endl;
                std::ofstream out("updated"+filename);
                out << updatedstring;
                out.close();
+               cout<<"File updated successfully"<<endl;
             }
             else cout<<"Tag not found, try again !"<<endl;
          }
@@ -191,7 +192,11 @@ int main(){
                string newtagstring=buildtagstring(newtagname,newtagvalue);
                subdata.insert(found, newtagstring);
                updatedstring+=subdata;
-               cout<<updatedstring<<endl;
+               updatedstring+='\n';
+               std::ofstream out("updated"+filename);
+               out << updatedstring;
+               out.close();
+               cout<<"Entry added and file updated successfully"<<endl;
             }
             else{
                cout<<"Oops, something went wrong, try again !"<<endl;
