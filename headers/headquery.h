@@ -114,9 +114,11 @@ int updatequery(std::string &s, std::vector<std::string> &alltags, std::string &
             s=v[x];
             tagname="";
             i++;
+            x=0;
             v.clear();
         }
     }
+    s=v[x];
     for(int i=vt.size()-1;i>=0;i--){
         for(int j=2;j<vt[i].size();j++){
             if((j-2)<stoi(vt[i][0])){
@@ -166,4 +168,57 @@ std::string buildtagstring(std::string &newtagname, std::string &newtagdata){
     newtagstring+=newtagname;
     newtagstring+=">";
     return newtagstring;
+}
+
+int insertquery(std::string &xmldata, std::vector<std::string> &alltags, std::string &tasktag){
+    std::vector<std::vector<std::string> >vt;
+    std::string s=xmldata;
+    int i=0;
+    std::string tagname="";
+    int x=0;
+    int index=0;
+    std::vector<std::string>v;
+    std::string tmp="";
+    while(i<tasktag.length()){
+        while(i<tasktag.length() && tasktag[i]!='[' && tasktag[i]!=']' && tasktag[i]!='.'){
+            tagname+=tasktag[i];
+            i++;
+        }
+        if(tasktag[i]=='['){
+            v=tagsdata(s,tagname);
+            i++;
+            while(i<tasktag.length() && tasktag[i]!=']'){
+                tmp+=tasktag[i];
+                i++;
+            }
+            v.insert(v.begin(),tagname);
+            v.insert(v.begin(),tmp);
+        }
+        else if(tasktag[i]==']'){
+            x=stoi(tmp);
+            i++;
+            tmp="";
+        }
+        else if(tasktag[i]=='.'){
+            vt.push_back(v);
+            x+=2;
+            s=v[x];
+            tagname="";
+            i++;
+            v.clear();
+        }
+    }
+    vt.push_back(v);
+    x+=2;
+    s=v[x];
+    for(int i=vt.size()-1;i>=0;i--){
+        for(int j=2;j<vt[i].size();j++){
+            if((j-2)<stoi(vt[i][0])){
+                index+=vt[i][j].length();
+                index+=2*(vt[i][1].length())+5;
+            }
+            else if((j-2)==stoi(vt[i][0]))index+=vt[i][1].length()+2;
+        }
+    }
+    return index;
 }
