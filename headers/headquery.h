@@ -128,3 +128,42 @@ int updatequery(std::string &s, std::vector<std::string> &alltags, std::string &
     }
     return index;
 }
+
+void separatetags(std::string &searchtag, std::string &newtagname, std::string &newtagdata, std::string &tasktag){
+    int i=0;
+    while(i<tasktag.length()){
+        while(i<tasktag.length() && tasktag[i]!=' '){
+            searchtag+=tasktag[i];
+            i++;
+            if(tasktag[i]==' '){
+                i++;
+                break;
+            }
+        }
+        while(i<tasktag.length() && tasktag[i]!=' '){
+            newtagname+=tasktag[i];
+            i++;
+            if(tasktag[i]==' '){
+                i++;
+                break;
+            }
+        }
+        while(i<tasktag.length()){
+            newtagdata+=tasktag[i];
+            i++;
+        }
+    }
+    return;
+}
+
+std::string buildtagstring(std::string &newtagname, std::string &newtagdata){
+    std::string newtagstring="";
+    newtagstring+="<";
+    newtagstring+=newtagname;
+    newtagstring+=">";
+    newtagstring+=newtagdata;
+    newtagstring+="</";
+    newtagstring+=newtagname;
+    newtagstring+=">";
+    return newtagstring;
+}
