@@ -33,8 +33,9 @@ std::vector<std::string> getalltagsname(std::string &s){
                 else if(s[i]==' '){
                     if(alltags.find(tagn)==alltags.end()){alltags.insert(tagn);tagsvector.push_back(tagn);}
                     tagn="";
-                    while(i<s.length() && s[i]!='/')i++;
-                    i+=2;
+                    while(i<s.length() && s[i]!='/' && s[i]!='>')i++;
+                    if(s[i]=='/')i+=2;
+                    else i++;
                 }
             }
         }
@@ -43,4 +44,9 @@ std::vector<std::string> getalltagsname(std::string &s){
         }
     }
     return tagsvector;
+}
+
+bool isExist(std::string &tag, std::vector<std::string> &alltagsname){
+    for(auto s:alltagsname)if(s==tag)return 1;
+    return 0;
 }
