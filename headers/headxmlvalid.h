@@ -5,9 +5,7 @@ std::string validTag(std::string s, std::string &x){
         if(s[i]=='<')return "-1";
         if(s[i]=='>')return tag;
         if(s[i]==' '){
-            while(i<s.length() && s[i]==' '){x+=s[i];i++;}
-            while(i<s.length() && s[i]!=' ' && s[i]!='>'){x+=s[i];i++;}
-            while(i<s.length() && s[i]==' '){x+=s[i];i++;}
+            while(i<s.length() && s[i]!='/' && s[i]!='>'){x+=s[i];i++;}
             if((s[i]=='/' && s[i+1]=='>') || (s[i]=='>' && s[i-1]=='/')){
                 tag+="/";
                 return tag;
@@ -19,6 +17,7 @@ std::string validTag(std::string s, std::string &x){
 }
 
 bool isValid(std::string s){
+    if(s[0]!='<')return 0;
     int i=0;
     if(s[0]=='<' && s[1]=='?'){
         i+=2;
