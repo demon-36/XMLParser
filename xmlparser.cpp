@@ -22,7 +22,8 @@ int main(){
       cout<<"type exit to quit !"<<endl<<endl;
 
       while(1){
-         cout<<"Choose desired option : "<<endl;
+         cout<<"\nChoose desired option : "<<endl;
+         cout<<"\t\t\t0. View XML file "<<endl;
          cout<<"\t\t\t1. Get all tags of XML file "<<endl;
          cout<<"\t\t\t2. Search for a particular tag "<<endl;
          cout<<"\t\t\t3. Perform some query operation "<<endl;
@@ -35,6 +36,10 @@ int main(){
          cin.ignore();
          if(opt=="quit" || opt=="exit"){
             exit(0);
+         }
+         else if(opt=="0"){
+            cout<<"\n XML file data is : "<<endl;
+            cout<<xmldata<<endl;
          }
          else if(opt=="1"){
             cout<<"\nAll tags in XML file are : ";
@@ -62,6 +67,7 @@ int main(){
          else if(opt=="3"){
             cout<<"\nSupported queries are : ";
             cout<<"Queries are case sensitive, keep that is mind :) "<<endl;
+            cout<<"\t\t\tGETXML * : to view XML file "<<endl;
             cout<<"\t\t\tSELECT * : select all tags available in XML file "<<endl;
             cout<<"\t\t\tSELECT tagname : search particular tag from XML "<<endl;
             cout<<"\t\t\tSEARCH query : search any query, Ex query : tag[0].tag[1].tag[2] "<<endl;
@@ -75,13 +81,27 @@ int main(){
                cout<<"\nEnter query : ";
                string q;
                getline(cin,q);
-
+               
                if(q=="exit" || q=="quit")break;
 
-               string head=q.substr(0,6);
-               string tasktag=q.substr(7);
+               string head="";
+               string tasktag="";
 
-               if(head=="SELECT"){
+               if(q.length()>6){
+                  head=q.substr(0,6);
+                  tasktag=q.substr(7);
+               }
+
+               if(head=="GETXML"){
+                  if(tasktag=="*"){
+                     cout<<"\nXML data of "<<filename<<" is : \n"<<xmldata<<"\n";
+                  }
+                  else{
+                     cout<<"\n Invalid query, try again !\n";
+                  }
+               }
+
+               else if(head=="SELECT"){
 
                   if(tasktag=="*"){
                      cout<<"\nAll tags in XML file are : ";
@@ -116,7 +136,7 @@ int main(){
                      for(int i=f+2;i<tasktag.length()-1;i++)attr+=tasktag[i];
                   }
                   else{ttag=tasktag;}
-                  string last=lasttag(ttag);                  
+                  string last=lasttag(ttag);
                   if(!isExist(last,alltagsname)){
                      cout<<"Tag not found, try again ! "<<endl;
                   }
@@ -132,8 +152,8 @@ int main(){
                            if(finalstr.find("konyamilyo")!=string::npos)cout<<"Attribute not found, try again !"<<endl;
                            else{
                               string attrvalue=getattrvalue(final[ind]);
-                              if(attrvalue.find("<")!=string::npos && 
-                                 ((attrvalue.find("/>")!=string::npos) || 
+                              if(attrvalue.find("<")!=string::npos &&
+                                 ((attrvalue.find("/>")!=string::npos) ||
                                  ((attrvalue.find(">")!=string::npos) && (attrvalue.find("</")!=string::npos)))){
                                     cout<<"Invalid attribute value, value can't have tag inside !"<<endl;
                               }
@@ -264,11 +284,12 @@ int main(){
                               else{
                                  string attrvalue=getattrvalue(final[ind]);
                                  string updated="";
-                                 for(int i=0;i<upindex;i++)updated+=xmldata[i];
-                                 string subst=xmldata.substr(upindex);
-                                 int fa=subst.find(attr);
-                                 for(int i=0;i<fa;i++)updated+=subst[i];
-                                 string substa=subst.substr(fa);
+                                 int f=xmldata.find(tmpdata);
+                                 for(int i=0;i<f;i++)updated+=xmldata[i];
+                                 string substx=xmldata.substr(f);
+                                 int fa=substx.find(attr);
+                                 for(int i=0;i<fa;i++)updated+=substx[i];
+                                 string substa=substx.substr(fa);
                                  int fav=substa.find(attrvalue);
                                  substa.erase(fav,attrvalue.length());
                                  substa.insert(fav,updatetag);
