@@ -3,10 +3,11 @@ std::vector<std::string> getalltagsname(std::string &s){
     int i=0;
     std::set<std::string>alltags;
     std::vector<std::string>tagsvector;
-    if(s[0]=='<' && s[1]=='?'){
-        i+=2;
-        while(i<s.length() && s[i]!='?')i++;
-        i+=2;
+    while(s.find("?>", i)!=std::string::npos){
+        i=s.find("?>", i)+2;
+        if(s.find("?>", i)==std::string::npos){
+            i=s.find("<", i);
+        }
     }
     while(i<s.length()){
         if(s[i]=='<'){
