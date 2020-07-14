@@ -19,10 +19,11 @@ std::string validTag(std::string s, std::string &x){
 bool isValid(std::string s){
     if(s[0]!='<')return 0;
     int i=0;
-    if(s[0]=='<' && s[1]=='?'){
-        i+=2;
-        while(s[i]!='?')i++;
-        i+=2;
+    while(s.find("?>", i)!=std::string::npos){
+        i=s.find("?>", i)+2;
+        if(s.find("?>", i)==std::string::npos){
+            i=s.find("<", i);
+        }
     }
     std::stack<std::string>st;
     while(i<s.length()){
